@@ -3,16 +3,16 @@
 #' This function allows the user to estimate the coefficients of a matrix-variate threshold autoregressive model with \emph{m} regimes through iterated least squares.
 #'
 #'
-#' @param data \code{array} of dependent variables of dimension \code{(mxnxT)}
+#' @param data \code{array} of dependent variables of dimension \code{(m×n×T)}
 #' @param p lag order
 #' @param regimes number of regimes
 #' @param maxiter Number of maximum iterations of the iterated least squares.
-#' @param st single transition variable for all the equation of dimension \code{(Tx1)}
+#' @param st single transition variable for all the equation of dimension \code{(T×1)}
 #' @param q quantile for the computation of the candidate values as thresholds.
 #' @param constant \code{TRUE} or \code{FALSE} to include or not a constant matrix.
-#' @param initA \code{list} of initial values for the row-wise coefficient \code{(mxm)} matrices, one list for each lag containing a list of matrices for each regime.
-#' @param initB \code{list} of initial values for the column-wise coefficient \code{(nxn)} matrices, one list for each lag containing a list of matrices for each regime.
-#' @param initM \code{list} of initial values for the constant \code{(mxn)} matrices, a list of matrices for each regime.
+#' @param initA \code{list} of initial values for the row-wise coefficient \code{(m×m)} matrices, one list for each lag containing a list of matrices for each regime.
+#' @param initB \code{list} of initial values for the column-wise coefficient \code{(n×n)} matrices, one list for each lag containing a list of matrices for each regime.
+#' @param initM \code{list} of initial values for the constant \code{(m×n)} matrices, a list of matrices for each regime.
 #' @param epsilon convergence check measure
 #' @param verbose \code{TRUE} or \code{FALSE} to show all the iteration outputs.
 #' @param ncores Number of cores used for parallel computation. Set to \code{NULL} by default and automatically calculated.

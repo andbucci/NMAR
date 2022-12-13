@@ -12,4 +12,4 @@ LazyData: true
 Depends: R (>= 4.0)
 Imports: abind, MASS, matrixcalc, matrixNormal, methods, optimParallel, parallel, sparsevar, tensor 
 URL: https://github.com/andbucci/NMAR
-RoxygenNote: 7.1.1
+RoxygenNote: 7.2.1
