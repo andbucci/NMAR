@@ -1,0 +1,15 @@
+Package: NMAR
+Type: Package
+Title: Nonlinear Matrix-variate autoregressive model
+Version: 1.1.1
+Authors@R: c(
+  person("Andrea", "Bucci", email = "andrea.bucci@unich.it", role = c("aut", "cre", "cph"))
+  )
+Description: Simulation, estimation and prediction from matrix-variate threshold and smooth transition autoregressive models. The estimation of the threshold model is discussed in Liu X. and Chen E.Y. (2022, <doi:10.1111/sjos.12576>), while the estimation of the matrix-variate smooth transition autoregressive model is discussed in Bucci (2022, <>).
+License: GPL
+Encoding: UTF-8
+LazyData: true
+Depends: R (>= 4.0)
+Imports: abind, MASS, matrixcalc, matrixNormal, methods, optimParallel, parallel, sparsevar, tensor 
+URL: https://github.com/andbucci/NMAR
+RoxygenNote: 7.1.1
