@@ -5,9 +5,6 @@
 #' @name MTAR.sim
 #' @rdname MTAR.sim
 #' @export
-#' @import matrixcalc vec
-#' @import matrixNormal rmatnorm
-#' @import stats rnorm
 #' @param m number of rows of the matrix-variate time series
 #' @param n number of columns of the matrix-variate time series
 #' @param p number of lags
