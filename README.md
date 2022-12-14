@@ -1,6 +1,6 @@
 # NMAR
 
-The goal of NMAR is to simulate data from nonlinear models for matrix-variate time series in R.
+The goal of NMAR is to simulate data, estimate and make predictions from nonlinear models for matrix-variate time series in R.
 
 # ## Installation
 # 
