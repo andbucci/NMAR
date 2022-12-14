@@ -8,7 +8,7 @@ You can install the released version of NMAR from Github with:
 
 ``` 
 library("devtools")
-install_packages_github("andbucci/NMAR")
+install_github("andbucci/NMAR")
 ```
 
 ## Example
