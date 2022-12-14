@@ -2,7 +2,12 @@
 #'
 #' This function allows the user to simulate the data from a matrix-variate threshold autoregressive model with \emph{m} regimes.
 #'
-#'
+#' @name MTAR.sim
+#' @rdname MTAR.sim
+#' @export
+#' @import matrixcalc vec
+#' @import matrixNormal rmatnorm
+#' @import stats rnorm
 #' @param m number of rows of the matrix-variate time series
 #' @param n number of columns of the matrix-variate time series
 #' @param p number of lags
@@ -107,7 +112,7 @@ MTAR.sim <- function(m = 2, n = 3, p = 1, regimes = 2, Nsim = 1000, burnin = 200
   Xt = Xt[,,(burnin+1):nsim]
   xtvec = matrix(nrow = nsim, ncol = m*n)
   for(l in 1:Nsim){
-    xtvec[l,] <- vec(Xt[,,l])
+    xtvec[l,] <- matrixcalc::vec(Xt[,,l])
   }
   simuldata = list(data = Xt, st = st[(burnin+1):nsim], threshold  = threshold, datavec = xtvec)
   return(simuldata)

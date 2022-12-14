@@ -2,7 +2,13 @@
 #'
 #' This function allows the user to estimate the coefficients of a matrix-variate threshold autoregressive model with \emph{m} regimes through iterated least squares.
 #'
-#'
+#' @name MTAR
+#' @rdname MTAR
+#' @aliases MTAR
+#' @export
+#' @import parallel detectCores
+#' @import MASS ginv
+#' @import matrixcalc vec
 #' @param data \code{array} of dependent variables of dimension \code{(m×n×T)}
 #' @param p lag order
 #' @param regimes number of regimes

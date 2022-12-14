@@ -2,3 +2,13 @@
 
 export(MTAR)
 export(MTAR.sim)
+import(MASS)
+import(detectCores)
+import(ginv)
+import(matrixNormal)
+import(matrixcalc)
+import(parallel)
+import(rmatnorm)
+import(rnorm)
+import(stats)
+import(vec)
