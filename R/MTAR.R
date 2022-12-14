@@ -106,11 +106,11 @@ MTAR <- function(data, p = 1, regimes = 3, maxiter = 200, st, q = 0.10,
       bdiff = matrix(1, nrow = n, ncol = n)
       while(iter < maxiter & all(bdiff > epsilon)){
         iter <- iter+1
-        temp1A = matrix(0, nrow = m, ncol = m) 
-        temp2A = matrix(0, nrow = m, ncol = m)
         for(k in 1:p){
           seqex = 1:p
           seqex = seqex[-k]
+          temp1A = matrix(0, nrow = m, ncol = m) 
+          temp2A = matrix(0, nrow = m, ncol = m)
         for(t in (p+1):Treg[j]){
           temp3A = matrix(0, nrow = m, ncol = m)
           for(l in seqex){
