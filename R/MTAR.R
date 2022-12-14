@@ -126,11 +126,11 @@ MTAR <- function(data, p = 1, regimes = 3, maxiter = 200, st, q = 0.10,
           }
           A[[k]][[j]] = frob.rescale(temp1A %*% MASS::ginv(temp2A))
         }
-        temp1B = matrix(0, nrow = n, ncol = n)
-        temp2B = matrix(0, nrow = n, ncol = n)
         for(k in 1:p){
           seqex = 1:p
           seqex = seqex[-k]
+          temp1B = matrix(0, nrow = n, ncol = n)
+          temp2B = matrix(0, nrow = n, ncol = n)
         for(t in (p+1):Treg[j]){
           temp3B = matrix(0, nrow = n, ncol = n)
             for(l in seqex){
@@ -142,10 +142,10 @@ MTAR <- function(data, p = 1, regimes = 3, maxiter = 200, st, q = 0.10,
             temp1B = t(datalist[[j]][,,t]) %*%A[[k]][[j]]%*%datalist[[j]][,,(t-k)] -temp3B + temp1B
           }
           temp2B = t(datalist[[j]][,,(t-k)])%*%t(A[[k]][[j]])%*%A[[k]][[j]]%*%datalist[[j]][,,(t-k)] + temp2B
+        }
           Bcheck = temp1B %*% MASS::ginv(temp2B)
           if(iter >1){
             bdiff = abs(B[[k]][[j]] - Bcheck) 
-          }
           }
           B[[k]][[j]] = temp1B %*% MASS::ginv(temp2B)
         }
@@ -233,7 +233,7 @@ MTAR <- function(data, p = 1, regimes = 3, maxiter = 200, st, q = 0.10,
     }
     res.val[,,i] = data[,,i] - fit.val[,,i]
     Sigma = Sigma + matrixcalc::vec(res.val[,,i]) %*% t(matrixcalc::vec(res.val[,,i]))
-    xvec[i,] = ks::vec(data[,,(i-1)])
+    xvec[i,] = matrixcalc::vec(data[,,(i-1)])
   }
   Omega = Sigma/(Tlength-1L)
   Sigmar = list()
