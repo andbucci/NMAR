@@ -71,7 +71,7 @@ B = list(list(matrix(0.05, n, n), matrix(0.05, n, n), matrix(0.05, n, n)))
 M = list(matrix(1, m, n), matrix(1.5, m, n), matrix(2, m, n))
 simuldata = MTAR.sim(m=m, n=n, p = 1,Nsim = nsim, 
 regimes = 3, threshold = c(0.3, 0.7), st_type = 'trend', 
-Etype = 'normal', A = A, B= B, M = M, sderror = 0.1)
+Etype = 'normal', A = A, B= B, M = M, sdEt = 0.1)
 
 plot.ts(simuldata$data[1,1,])
 
