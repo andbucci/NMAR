@@ -1,13 +1,13 @@
-# starvars
+# NMAR
 
-The goal of starvars is to estimate a Vector Logistic Smooth Transition model in R. The package allows also the user to test non-linearity and determine common structural breaks in multivariate time series. Furthermore, realized covariances and their Cholesky decomposition may be obtained through a dedicated function.
+The goal of NMAR is to simulate data from nonlinear models for matrix-variate time series in R.
 
-## Installation
-
-You can install the released version of starvars from [CRAN](https://CRAN.R-project.org) with:
-
-``` r
-install.packages("starvars")
+# ## Installation
+# 
+# You can install the released version of NMAR from [CRAN](https://CRAN.R-project.org) with:
+# 
+# ``` r
+# install.packages("starvars")
 ```
 
 ## Example
