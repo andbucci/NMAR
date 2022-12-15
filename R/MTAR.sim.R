@@ -9,7 +9,7 @@
 #' @param n number of columns of the matrix-variate time series
 #' @param p number of lags
 #' @param regimes number of regimes
-#' @param Nsim number of simulated data
+#' @param nsim number of simulated data
 #' @param burnin number of data to be burned
 #' @param constant \code{TRUE} or \code{FALSE} to include or not a constant matrix.
 #' @param A \code{list} of values for the row-wise coefficient \code{(m×m)} matrices, one list for each lag containing a list of matrices for each regime.

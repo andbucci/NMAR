@@ -29,6 +29,8 @@ MTAR.sim(
 
 \item{regimes}{number of regimes}
 
+\item{nsim}{number of simulated data}
+
 \item{constant}{\code{TRUE} or \code{FALSE} to include or not a constant matrix.}
 
 \item{A}{\code{list} of values for the row-wise coefficient \code{(m×m)} matrices, one list for each lag containing a list of matrices for each regime.}
@@ -50,8 +52,6 @@ MTAR.sim(
 }}
 
 \item{sdEt}{standard deviation for the sampling of the covariance matrix}
-
-\item{Nsim}{number of simulated data}
 
 \item{burnin}{number of data to be burned}
 }
