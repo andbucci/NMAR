@@ -68,8 +68,8 @@ This function allows the user to estimate the coefficients of a matrix-variate t
 m = 3
 n = 2
 nsim = 1000
-A = list(list(matrix(0.10, m, m), matrix(0.25, m, m), matrix(0.35, m, m)))
-B = list(list(matrix(0.15, n, n), matrix(0.30, n, n), matrix(0.40, n, n)))
+A = list(list(matrix(0.05, m, m), matrix(0.10, m, m), matrix(0.15, m, m)))
+B = list(list(matrix(0.05, n, n), matrix(0.10, n, n), matrix(0.15, n, n)))
 M = list(matrix(1, m, n), matrix(1.5, m, n), matrix(2, m, n))
 simuldata = MTAR.sim(m=m, n=n, p = 1, nsim = 1000, 
 regimes = 3, threshold = c(0.3, 0.7), st_type = 'trend', 

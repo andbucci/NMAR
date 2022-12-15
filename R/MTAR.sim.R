@@ -39,8 +39,8 @@
 #'m = 3
 #'n = 2
 #'nsim = 1000
-#'A = list(list(matrix(0.10, m, m), matrix(0.25, m, m), matrix(0.35, m, m)))
-#'B = list(list(matrix(0.15, n, n), matrix(0.30, n, n), matrix(0.40, n, n)))
+#'A = list(list(matrix(0.05, m, m), matrix(0.10, m, m), matrix(0.15, m, m)))
+#'B = list(list(matrix(0.05, n, n), matrix(0.10, n, n), matrix(0.15, n, n)))
 #'M = list(matrix(1, m, n), matrix(1.5, m, n), matrix(2, m, n))
 #'simuldata = MTAR.sim(m=m, n=n, p = 1, nsim = 1000, 
 #' regimes = 3, threshold = c(0.3, 0.7), st_type = 'trend', 
@@ -98,12 +98,12 @@ MTAR.sim <- function(m = 2, n = 3, p = 1, regimes = 2, nsim = 1000,
         Xval = A[[k]][[i]]%*%Xt[,,(t-k)]%*%t(B[[k]][[i]]) + Xval
       }
       if(constant == TRUE){
-        Xreg = (M[[i]] + Xval + Et)*index[[i]][t] + Xreg
+        Xreg = (M[[i]] + Xval)*index[[i]][t] + Xreg
       }else{
-        Xreg = (Xval + Et)*index[[i]][t] + Xreg
+        Xreg = (Xval)*index[[i]][t] + Xreg
       }
     }
-    Xt[,,t] = Xreg
+    Xt[,,t] = Xreg + Et
   }
   Xt = Xt[,,p:nsim]
   xtvec = matrix(nrow = nsim, ncol = m*n)

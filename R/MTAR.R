@@ -39,8 +39,8 @@
 #'m = 3
 #'n = 2
 #'nsim = 1000
-#'A = list(list(matrix(0.10, m, m), matrix(0.25, m, m), matrix(0.35, m, m)))
-#'B = list(list(matrix(0.15, n, n), matrix(0.30, n, n), matrix(0.40, n, n)))
+#'A = list(list(matrix(0.05, m, m), matrix(0.10, m, m), matrix(0.15, m, m)))
+#'B = list(list(matrix(0.05, n, n), matrix(0.10, n, n), matrix(0.15, n, n)))
 #'M = list(matrix(1, m, n), matrix(1.5, m, n), matrix(2, m, n))
 #'simuldata = MTAR.sim(m=m, n=n, p = 1, nsim = 1000, 
 #' regimes = 3, threshold = c(0.3, 0.7), st_type = 'trend', 
@@ -108,6 +108,17 @@ MTAR <- function(data, p = 1, regimes = 3, maxiter = 200, st, q = 0.10,
       bdiff = matrix(1, nrow = n, ncol = n)
       while(iter < maxiter & all(bdiff > epsilon)){
         iter <- iter+1
+        if(constant == TRUE){
+          temp1M = matrix(0, nrow = m, ncol = n)
+          for(t in (p+1):Treg[j]){
+            temp2M = matrix(0, nrow = m, ncol = n)
+            for(k in 1:p){
+              temp2M = A[[k]][[j]]%*%datalist[[j]][,,(t-k)]%*%t(B[[k]][[j]])
+            }
+            temp1M = datalist[[j]][,,t] - temp2M + temp1M
+          }
+          M[[j]] = temp1M/(Treg[j]-1)  
+        }
         for(k in 1:p){
           seqex = 1:p
           seqex = seqex[-k]
@@ -127,40 +138,25 @@ MTAR <- function(data, p = 1, regimes = 3, maxiter = 200, st, q = 0.10,
             temp2A = (datalist[[j]][,,(t-k)]%*%t(B[[k]][[j]])%*%B[[k]][[j]]%*%t(datalist[[j]][,,(t-k)])) + temp2A
           }
           A[[k]][[j]] = frob.rescale(temp1A %*% MASS::ginv(temp2A))
-        }
-        for(k in 1:p){
-          seqex = 1:p
-          seqex = seqex[-k]
           temp1B = matrix(0, nrow = n, ncol = n)
           temp2B = matrix(0, nrow = n, ncol = n)
-        for(t in (p+1):Treg[j]){
-          temp3B = matrix(0, nrow = n, ncol = n)
+          for(t in (p+1):Treg[j]){
+            temp3B = matrix(0, nrow = n, ncol = n)
             for(l in seqex){
               temp3B = B[[l]][[j]]%*%t(datalist[[j]][,,(t-l)])%*%t(A[[l]][[j]])%*%A[[k]][[j]]%*%data[,,(t-k)]+temp3B
             }
-          if(constant == TRUE){
-            temp1B = t(datalist[[j]][,,t]-M[[j]]) %*%A[[k]][[j]]%*%datalist[[j]][,,(t-k)] - temp3B + temp1B
-          }else{
-            temp1B = t(datalist[[j]][,,t]) %*%A[[k]][[j]]%*%datalist[[j]][,,(t-k)] -temp3B + temp1B
+            if(constant == TRUE){
+              temp1B = t(datalist[[j]][,,t]-M[[j]]) %*%A[[k]][[j]]%*%datalist[[j]][,,(t-k)] - temp3B + temp1B
+            }else{
+              temp1B = t(datalist[[j]][,,t]) %*%A[[k]][[j]]%*%datalist[[j]][,,(t-k)] -temp3B + temp1B
+            }
+            temp2B = t(datalist[[j]][,,(t-k)])%*%t(A[[k]][[j]])%*%A[[k]][[j]]%*%datalist[[j]][,,(t-k)] + temp2B
           }
-          temp2B = t(datalist[[j]][,,(t-k)])%*%t(A[[k]][[j]])%*%A[[k]][[j]]%*%datalist[[j]][,,(t-k)] + temp2B
-        }
           Bcheck = temp1B %*% MASS::ginv(temp2B)
           if(iter >1){
             bdiff = abs(B[[k]][[j]] - Bcheck) 
           }
           B[[k]][[j]] = temp1B %*% MASS::ginv(temp2B)
-        }
-        if(constant == TRUE){
-          temp1M = matrix(0, nrow = m, ncol = n)
-          for(t in (p+1):Treg[j]){
-            temp2M = matrix(0, nrow = m, ncol = n)
-            for(k in 1:p){
-              temp2M = A[[k]][[j]]%*%datalist[[j]][,,(t-k)]%*%t(B[[k]][[j]])
-            }
-            temp1M = datalist[[j]][,,t] - temp2M + temp1M
-          }
-          M[[j]] = temp1M/(Treg[j]-1)  
         }
         if(verbose==TRUE){
           print(iter)}
