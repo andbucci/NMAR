@@ -55,6 +55,8 @@ return a list containing the following:\describe{
 \item{\code{threshold}}{a vector of estimated thresholds equal to the number of regimes minus 1}
 \item{\code{Sigma}}{an \code{mnxmn} covariance matrix of the error term}
 \item{\code{stderr}}{a list of standard errors for the estimated coefficients}
+\item{\code{fitted}}{an array of fitted values}
+\item{\code{residuals}}{an array of residuals}
 \item{\code{dimensions}}{a list containing the dimension of the data in each regime}
 }
 }

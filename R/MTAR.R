@@ -26,6 +26,8 @@
 #' \item{\code{threshold}}{a vector of estimated thresholds equal to the number of regimes minus 1}
 #' \item{\code{Sigma}}{an \code{mnxmn} covariance matrix of the error term}
 #' \item{\code{stderr}}{a list of standard errors for the estimated coefficients}
+#' \item{\code{fitted}}{an array of fitted values}
+#' \item{\code{residuals}}{an array of residuals}
 #' \item{\code{dimensions}}{a list containing the dimension of the data in each regime}
 #' }
 #' @references Liu X. and Chen E.Y. (2022), Identification and estimation of threshold matrix-variate factor models. \emph{Scandinavian Journal of Statistics}. 49: 1383-1417
@@ -253,11 +255,13 @@ MTAR <- function(data, p = 1, regimes = 3, maxiter = 200, st, q = 0.10,
   if(constant == TRUE){
     results = list(stationary = stat_check, A = theta$A, 
                    B = theta$B, M = theta$M, threshold = theta$c, Sigma = Omega,
-                   stderr = Sigmar, dimensions = lapply(index, length)) 
+                   stderr = Sigmar, fitted = fit.val, residuals = res.val,
+                   dimensions = lapply(index, length)) 
   }else{
     results = list(stationary = stat_check, A = theta$A, 
                    B = theta$B,  threshold = theta$c, Sigma = Omega,
-                   stderr = Sigmar, dimensions = lapply(index, length)) 
+                   stderr = Sigmar, fitted = fit.val, residuals = res.val,
+                   dimensions = lapply(index, length)) 
   }
   return(results)
 }

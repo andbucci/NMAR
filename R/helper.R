@@ -143,3 +143,4 @@ frob.rescale <- function(A){
   Anorm = m/nrm
   return(Anorm)
 }
+

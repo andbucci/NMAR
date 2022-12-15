@@ -9,8 +9,7 @@ MTAR.sim(
   n = 3,
   p = 1,
   regimes = 2,
-  Nsim = 1000,
-  burnin = 200,
+  nsim = 1000,
   constant = TRUE,
   A,
   B,
@@ -29,10 +28,6 @@ MTAR.sim(
 \item{p}{number of lags}
 
 \item{regimes}{number of regimes}
-
-\item{Nsim}{number of simulated data}
-
-\item{burnin}{number of data to be burned}
 
 \item{constant}{\code{TRUE} or \code{FALSE} to include or not a constant matrix.}
 
@@ -54,7 +49,11 @@ MTAR.sim(
  \item{\code{"normal",}}{the \code{mnxmn} covariance matrix is sampled from a normal distribution}
 }}
 
-\item{sdEt}{standard deviation for the sampling of the covariance matrix when \code{Etype} is equal to "normal"}
+\item{sdEt}{standard deviation for the sampling of the covariance matrix}
+
+\item{Nsim}{number of simulated data}
+
+\item{burnin}{number of data to be burned}
 }
 \value{
 return a list containing the following:\describe{
@@ -71,12 +70,12 @@ This function allows the user to simulate the data from a matrix-variate thresho
 m = 3
 n = 2
 nsim = 1000
-A = list(list(matrix(0.05, m, m), matrix(0.05, m, m), matrix(0.05, m, m)))
-B = list(list(matrix(0.05, n, n), matrix(0.05, n, n), matrix(0.05, n, n)))
+A = list(list(matrix(0.05, m, m), matrix(0.10, m, m), matrix(0.12, m, m)))
+B = list(list(matrix(0.05, n, n), matrix(0.10, n, n), matrix(0.12, n, n)))
 M = list(matrix(1, m, n), matrix(1.5, m, n), matrix(2, m, n))
-simuldata = MTAR.sim(m=m, n=n, p = 1,Nsim = nsim, 
+simuldata = MTAR.sim(m=m, n=n, p = 1,nsim = 1000, 
 regimes = 3, threshold = c(0.3, 0.7), st_type = 'trend', 
-Etype = 'normal', A = A, B= B, M = M, sderror = 0.1)
+Etype = 'normal', A = A, B= B, M = M, sdEt = 0.1)
 
 plot.ts(simuldata$data[1,1,])
 }

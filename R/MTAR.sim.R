@@ -24,7 +24,7 @@
 #'  \item{\code{"identity",}}{two identity matrices are used as row-wise and column-wise covariance matrices}
 #'  \item{\code{"normal",}}{the \code{mnxmn} covariance matrix is sampled from a normal distribution}
 #'}
-#' @param sdEt standard deviation for the sampling of the covariance matrix when \code{Etype} is equal to "normal" 
+#' @param sdEt standard deviation for the sampling of the covariance matrix
 #' @return return a list containing the following:\describe{
 #' \item{\code{data}}{an \code{m×n×T} array with data simulated from a MTAR model}
 #' \item{\code{st}}{the transition variable used to simulate the data}
@@ -39,16 +39,16 @@
 #'m = 3
 #'n = 2
 #'nsim = 1000
-#'A = list(list(matrix(0.05, m, m), matrix(0.05, m, m), matrix(0.05, m, m)))
-#'B = list(list(matrix(0.05, n, n), matrix(0.05, n, n), matrix(0.05, n, n)))
+#'A = list(list(matrix(0.05, m, m), matrix(0.10, m, m), matrix(0.12, m, m)))
+#'B = list(list(matrix(0.05, n, n), matrix(0.10, n, n), matrix(0.12, n, n)))
 #'M = list(matrix(1, m, n), matrix(1.5, m, n), matrix(2, m, n))
-#'simuldata = MTAR.sim(m=m, n=n, p = 1,Nsim = nsim, 
+#'simuldata = MTAR.sim(m=m, n=n, p = 1,nsim = 1000, 
 #' regimes = 3, threshold = c(0.3, 0.7), st_type = 'trend', 
-#' Etype = 'normal', A = A, B= B, M = M, sderror = 0.1)
+#' Etype = 'normal', A = A, B= B, M = M, sdEt = 0.1)
 #' 
 #' plot.ts(simuldata$data[1,1,])
 
-MTAR.sim <- function(m = 2, n = 3, p = 1, regimes = 2, Nsim = 1000, burnin = 200, 
+MTAR.sim <- function(m = 2, n = 3, p = 1, regimes = 2, nsim = 1000,  
                      constant = TRUE, A, B, M = NULL, threshold = 0.3,
                      st_type = c('trend', 'autoregressive'), Etype=c('identity','normal'),
                      sdEt = 0.2){
@@ -56,15 +56,14 @@ MTAR.sim <- function(m = 2, n = 3, p = 1, regimes = 2, Nsim = 1000, burnin = 200
     stop('The number of regimes should be greater than one.')
   if(length(threshold) != (regimes-1))
     stop('The number of thresholds should be equal to the number of transitions.')
-  nsim = Nsim + burnin
   if(st_type == 'trend'){
-    st = rep(0, (nsim+1))
+    st = rep(0, (nsim+p))
     st = (1:nsim)/nsim
     index1 = rep(0, nsim)
     index2 = rep(0, nsim)
   }else if(st_type == 'autoregressive'){
-    st = rep(0, (nsim+1))
-    epsilonst = rnorm((nsim+1))
+    st = rep(0, (nsim+p))
+    epsilonst = rnorm((nsim+p))
     st[1] = epsilonst[1]
     for(t in 2:nsim){
       st[t] = 0.95 * st[(t-1)] + epsilonst[t]
@@ -85,10 +84,10 @@ MTAR.sim <- function(m = 2, n = 3, p = 1, regimes = 2, Nsim = 1000, burnin = 200
     }
   }
   Xt = array(0, dim = c(m,n,(nsim+1)))
-  Xt[,,1:p] = matrix(rnorm(m*n,mean=0,sd=1), m, n)
+  Xt[,,1:p] = M[[1]]
   for(t in (1+p):nsim){
     if(Etype == 'identity'){
-      Et = matrixNormal::rmatnorm(M = matrix(0, m, n), U=sderror*diag(m), V=sderror*diag(n))
+      Et = matrixNormal::rmatnorm(M = matrix(0, m, n), U=sdEt*diag(m), V=sdEt*diag(n))
     }else if(Etype == 'normal'){
       Et = matrix(rnorm(m*n,mean=0,sd=sdEt), m, n)
     }
@@ -106,11 +105,11 @@ MTAR.sim <- function(m = 2, n = 3, p = 1, regimes = 2, Nsim = 1000, burnin = 200
     }
     Xt[,,t] = Xreg
   }
-  Xt = Xt[,,(burnin+1):nsim]
+  Xt = Xt[,,p:nsim]
   xtvec = matrix(nrow = nsim, ncol = m*n)
-  for(l in 1:Nsim){
+  for(l in 1:nsim){
     xtvec[l,] <- matrixcalc::vec(Xt[,,l])
   }
-  simuldata = list(data = Xt, st = st[(burnin+1):nsim], threshold  = threshold, datavec = xtvec)
+  simuldata = list(data = Xt, st = st[(p+1):nsim], threshold  = threshold, datavec = xtvec)
   return(simuldata)
 }
