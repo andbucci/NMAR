@@ -55,8 +55,6 @@ MSTAR.sim(
 }}
 
 \item{sdEt}{standard deviation for the sampling of the covariance matrix}
-
-\item{burnin}{number of data to be burned}
 }
 \value{
 return a list containing the following:\describe{
